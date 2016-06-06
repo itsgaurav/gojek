@@ -68,10 +68,75 @@ class Solution
       end
     end
 
+    def is_file_mode?(input=nil)
+      input ? input.include?(">") : false
+    end
+
+    #Function to check if valid input
+    def valid_input? input
+      matched = input.match FILE_INPUT_FORMAT
+
+      if matched
+        true
+      else
+        puts INVALID_INPUT_FORMAT_MSG
+        false
+      end
+    end
+
+    def file_exist?(input_file)
+      @file = Dir["#{input_file}"][0]
+      !@file.nil?
+    end
+
+    def init_file_mode input
+      input_file = input.split(">")[0].strip
+      output_file = input.split(">")[1].strip
+      if file_exist?(input_file)
+        clean_output_file
+        parse_file input_file
+      else
+        puts FILE_NOT_FOUND_MSG
+      end
+    end
+
+    def clean_output_file
+      file = File.open(OUTPUT_FILE, "a+")
+      file.truncate(0)
+    end
+
+    def parse_file input_file
+      File.open(@file, "r") do |file|
+        while command = file.gets  
+          unless command.blank?
+            @command = command
+            execute_each_fileline 
+          end 
+        end 
+      end
+    end
+
+    def create_output_file output
+      File.open(OUTPUT_FILE, "a+") do |file|
+        file.puts output
+        file.puts "\n"
+      end
+    end
+
+    def execute_each_fileline 
+      output = parse_input_command
+      create_output_file output
+      print_output output
+    end
+
     #Function to start the program
     def run 
-    	params = ARGV.first
-      init_interactive_mode
+      params = ARGV.first
+      if is_file_mode? params 
+        init_file_mode(params) if valid_input?(params)
+      else
+        init_interactive_mode
+      end
     end
 
   end

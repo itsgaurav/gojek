@@ -54,8 +54,7 @@ FOURTH_SLOT_FREE_MSG = "Slot number 4 is free"
 
 #PROGRAM CONSTANTS GOES HERE
 INPUT_FORMAT_FILE_MODE = 'file_inputs.txt > output.txt'
-OUTPUT_FILE = "#{Dir.pwd}/lib/data/output.txt"
-DATA_PATH = "#{Dir.pwd}/lib/data"
+OUTPUT_FILE = "#{Dir.pwd}/output.txt"
 
 WELCOME_MSG = "Hi Buddy. WELCOME TO PRAKING LOT APPLICATION !"
 STATUS_HEADER = [
